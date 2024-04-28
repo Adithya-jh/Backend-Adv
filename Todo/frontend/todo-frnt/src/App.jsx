@@ -6,9 +6,9 @@ import { Todos } from './components/Todos';
 function App() {
   const [todos, setTodos] = useState([]);
 
-  fetch('http://localhost:3000/todos').then(async (res) => {
+  fetch('http://localhost:3000/todo').then(async (res) => {
     const json = await res.json();
-    console.log(json.todos);
+
     setTodos(json.todos);
   });
   return (
