@@ -5,7 +5,10 @@ const express = require('express');
 const app = express();
 const { todo } = require('./db');
 
+const cors = require('cors');
+
 app.use(express.json());
+app.use(cors());
 
 // in todo -> we have a title and description {title :String ,description :String} -> so for input validation we use ZOD
 const { createTodo, updateTodo } = require('./types');
