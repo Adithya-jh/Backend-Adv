@@ -1,6 +1,13 @@
 import { RecoilRoot, useRecoilValue } from 'recoil';
 import './App.css';
-import { jobsAtom, messageAtom, networkAtom, notifsAtom } from '../atoms';
+import {
+  jobsAtom,
+  messageAtom,
+  networkAtom,
+  notifsAtom,
+  totalValue,
+} from '../atoms';
+import { useMemo } from 'react';
 
 function App() {
   return (
@@ -17,6 +24,15 @@ function MainApp() {
   const jobsCount = useRecoilValue(jobsAtom);
   const notifCount = useRecoilValue(notifsAtom);
   const messageCount = useRecoilValue(messageAtom);
+
+  const totalCount = useRecoilValue(totalValue);
+
+  //using usememo -> similar can be acheived using selectors
+
+  const total = useMemo(() => {
+    return networkCount + jobsCount + notifCount + messageCount;
+  }, [networkCount, jobsCount, notifCount, messageCount]);
+
   return (
     <>
       <button>Home</button>
@@ -26,7 +42,8 @@ function MainApp() {
       <button>Messaging ({messageCount})</button>
       <button>Notification ({notifCount})</button>
 
-      <button>Me</button>
+      <button>Me ({totalCount})</button>
+      <button>you ({total})</button>
     </>
   );
 }
