@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost:27017/paytm');
+mongoose.connect(
+  'mongodb+srv://JHA:adith%402003@cluster0.0tkqt.mongodb.net/paytm'
+);
 
 const schema = mongoose.Schema({
   userName: String,
@@ -9,6 +11,6 @@ const schema = mongoose.Schema({
   lastName: String,
 });
 
-const user = mongoose.model('User', schema);
+const User = mongoose.model('User', schema);
 
-module.exports = { user };
+module.exports = { User };
