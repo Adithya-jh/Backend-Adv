@@ -1,60 +1,74 @@
+// backend/routes/user.js
 const express = require('express');
+
+const router = express.Router();
 const zod = require('zod');
+const { User, Account } = require('../db');
 const jwt = require('jsonwebtoken');
-const { User } = require('../db');
 const JWT_SECRET = require('../config');
 const { authMiddleware } = require('../middleware');
 
-const router = express.Router();
-
-const signupSchema = zod.object({
+const signupBody = zod.object({
   username: zod.string(),
+  firstName: zod.string(),
+  lastName: zod.string(),
   password: zod.string(),
-  firstname: zod.string(),
-  lastname: zod.string(),
 });
 
 router.post('/signup', async (req, res) => {
-  const body = req.body;
-  const { success } = signupSchema.parseSafe(req.body);
+  const { success } = signupBody.safeParse(req.body);
   if (!success) {
-    return res.json({
-      message: 'Invalid inputs',
+    return res.status(411).json({
+      message: 'Email already taken / Incorrect inputs',
     });
   }
 
-  const user = User.findOne({
-    username: body.userName,
+  const existingUser = await User.findOne({
+    username: req.body.username,
   });
 
-  if (user._id) {
-    return res.json({
-      message: 'Email already taken',
+  if (existingUser) {
+    return res.status(411).json({
+      message: 'Email already taken/Incorrect inputs',
     });
   }
-  const dbUser = await user.createOne(body);
+
+  const user = await User.create({
+    username: req.body.username,
+    password: req.body.password,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
+  });
+  const userId = user._id;
+
+  await Account.create({
+    userId,
+    balance: 1 + Math.random() * 10000,
+  });
+
   const token = jwt.sign(
     {
-      userId: dbUser._id,
+      userId,
     },
     JWT_SECRET
   );
+
   res.json({
-    message: 'user created successfully',
+    message: 'User created successfully',
     token: token,
   });
 });
 
 const signinBody = zod.object({
-  username: zod.string.email(),
+  username: zod.string().email(),
   password: zod.string(),
 });
 
 router.post('/signin', async (req, res) => {
-  const { success } = signinBody.parseSafe(req.body);
+  const { success } = signinBody.safeParse(req.body);
   if (!success) {
     return res.status(411).json({
-      message: 'Invalid inputs',
+      message: 'Email already taken / Incorrect inputs',
     });
   }
 
@@ -83,17 +97,16 @@ router.post('/signin', async (req, res) => {
 });
 
 const updateBody = zod.object({
-  firstname: zod.string(),
-  lastname: zod.string(),
-  password: zod.string(),
+  password: zod.string().optional(),
+  firstName: zod.string().optional(),
+  lastName: zod.string().optional(),
 });
 
 router.put('/', authMiddleware, async (req, res) => {
-  const { success } = updateBody.parseSafe(req.body);
-
+  const { success } = updateBody.safeParse(req.body);
   if (!success) {
     res.status(411).json({
-      message: 'Error while updating',
+      message: 'Error while updating information',
     });
   }
 
@@ -102,12 +115,13 @@ router.put('/', authMiddleware, async (req, res) => {
   });
 
   res.json({
-    message: 'updated bruh',
+    message: 'Updated successfully',
   });
 });
 
 router.get('/bulk', async (req, res) => {
   const filter = req.query.filter || '';
+
   const users = await User.find({
     $or: [
       {
@@ -116,7 +130,7 @@ router.get('/bulk', async (req, res) => {
         },
       },
       {
-        lastname: {
+        lastName: {
           $regex: filter,
         },
       },
