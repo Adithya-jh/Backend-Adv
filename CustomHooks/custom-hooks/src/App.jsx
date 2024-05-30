@@ -1,43 +1,86 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useDebounce } from './hooks/useDebounce';
 import './App.css';
 
-function useTodo() {
-  const [todos, setTodos] = useState([]);
-  const [loading, setLoading] = useState(true);
+//isOnline custom hook
+
+function useIsOnline() {
+  const [isOnline, setIsOnline] = useState(window.navigator.onLine);
+
   useEffect(() => {
-    axios.get('https://sum-server.100xdevs.com/todos').then((res) => {
-      setTodos(res.data.todos);
-      setLoading(false);
-      console.log(todos);
+    window.addEventListener('online', () => {
+      setIsOnline(true);
+    });
+  });
+
+  useEffect(() => {
+    window.addEventListener('offline', () => {
+      setIsOnline(false);
     });
   }, []);
 
-  return { todos, loading };
+  return isOnline;
 }
 
-function App() {
-  const { todos, loading } = useTodo();
+//mouse pointer hook
 
-  if (loading) {
-    return (
-      <>
-        <div>Loading....</div>
-      </>
-    );
-  }
+const useMousePointer = () => {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const handleMouseMove = (e) => {
+    setPosition({ x: e.clientX, y: e.clientY });
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', handleMouseMove);
+
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
+
+  return position;
+};
+
+function App() {
+  // const { todos, loading } = useTodo();
+  const online = useIsOnline();
+  const mousePointer = useMousePointer();
+
+  const [value, setValue] = useState(0);
+  const debouncedValue = useDebounce(value, 500);
+
+  //so whenever a debounced value is changed then fetch from the server
+  useEffect(() => {
+    fetch('');
+  }, [debouncedValue]);
+
+  // if (loading) {
+  //   return (
+  //     <>
+  //       <div>Loading....</div>
+  //     </>
+  //   );
+  // }
   return (
     <>
       {/* <MyComponent />
       <MyComponent2 /> */}
       <div>
-        {todos.map((todo) => {
+        {/* {todos.map((todo) => {
           <div>
             {todo.title}
             <br />
             {todo.description}
           </div>;
-        })}
+        })} */}
+        {online ? <>yOU ARE ONLINE</> : <>ONPE</>}
+        <br />
+        Your mouse position is {mousePointer.x} {mousePointer.y}
+        <br />
+        <br />
+        <br />
+        <>
+          DEBOUNCED VALUE IS {debouncedValue}
+          <input type="text" onChange={(e) => setValue(e.target.value)} />
+        </>
       </div>
     </>
   );
