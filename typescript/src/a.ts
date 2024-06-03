@@ -47,3 +47,15 @@ isLegal({
   lastName: 'A',
   age: 20,
 });
+
+//using enums:
+
+type keyType = 'up' | 'down' | 'right' | 'left';
+
+const game = (direction: keyType) => {
+  console.log(direction);
+};
+
+game('up');
+game('right'); //you can give only u have defined
+// game("hdh") -> this gives the error
