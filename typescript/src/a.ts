@@ -48,14 +48,29 @@ isLegal({
   age: 20,
 });
 
-//using enums:
+//using enums: enums allows to do the named constants
 
-type keyType = 'up' | 'down' | 'right' | 'left';
+type keyType = 'up' | 'down' | 'right' | 'left'; //we can give like this but enums are prefered over this
 
-const game = (direction: keyType) => {
+enum Direction { //definition of enum
+  up,
+  down,
+  right,
+  left,
+}
+
+const gameWOenums = (direction: keyType) => {
+  //not using using enums -> we use types
   console.log(direction);
 };
 
-game('up');
-game('right'); //you can give only u have defined
-// game("hdh") -> this gives the error
+const gameWithENUMS = (direction: Direction) => {
+  //using enums
+  console.log(direction);
+  if (direction == Direction.up) {
+  }
+};
+
+gameWithENUMS(Direction.up);
+gameWithENUMS(Direction.down); //you can give only u have defined
+// gameWithENUMS("hdh") -> this gives the error
