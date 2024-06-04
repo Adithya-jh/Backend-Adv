@@ -49,14 +49,16 @@ isLegal({
 });
 
 //using enums: enums allows to do the named constants
+// we use enums when we use limited number of inputs to the function
+//in js there is no enums
 
 type keyType = 'up' | 'down' | 'right' | 'left'; //we can give like this but enums are prefered over this
 
 enum Direction { //definition of enum
-  up,
-  down,
-  right,
-  left,
+  up, //  0
+  down, //  1
+  right, //  2
+  left, //  3
 }
 
 const gameWOenums = (direction: keyType) => {
