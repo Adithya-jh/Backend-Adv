@@ -1,0 +1,129 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Connections {
+  id               String          @id
+  type             String          @unique
+  discordWebhookId String?
+  notionId         String?
+  userId           String?
+  slackId          String?
+  DiscordWebhook   DiscordWebhook? @relation(fields: [discordWebhookId], references: [id])
+  Notion           Notion?         @relation(fields: [notionId], references: [id])
+  Slack            Slack?          @relation(fields: [slackId], references: [id])
+  User             User?           @relation(fields: [userId], references: [clerkId])
+}
+
+model DiscordWebhook {
+  id          String        @id
+  webhookId   String        @unique
+  url         String        @unique
+  name        String
+  guildName   String
+  guildId     String
+  channelId   String        @unique
+  userId      String
+  Connections Connections[]
+  User        User          @relation(fields: [userId], references: [clerkId])
+}
+
+model LocalGoogleCredential {
+  id          String   @id
+  accessToken String   @unique
+  folderId    String?
+  pageToken   String?
+  channelId   String   @unique
+  subscribed  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime
+  userId      Int      @unique
+  User        User     @relation(fields: [userId], references: [id])
+}
+
+model Notion {
+  id            String        @id
+  accessToken   String        @unique
+  workspaceId   String        @unique
+  databaseId    String        @unique
+  workspaceName String
+  workspaceIcon String
+  userId        String
+  Connections   Connections[]
+  User          User          @relation(fields: [userId], references: [clerkId])
+}
+
+model Slack {
+  id               String        @id
+  appId            String
+  authedUserId     String
+  authedUserToken  String        @unique
+  slackAccessToken String        @unique
+  botUserId        String
+  teamId           String
+  teamName         String
+  userId           String
+  Connections      Connections[]
+  User             User          @relation(fields: [userId], references: [clerkId])
+}
+
+model User {
+  id                    Int                    @id @default(autoincrement())
+  clerkId               String                 @unique
+  name                  String?
+  email                 String                 @unique
+  profileImage          String?
+  createdAt             DateTime               @default(now())
+  credits               String?                @default("10")
+  googleResourceId      String?                @unique
+  localGoogleId         String?                @unique
+  tier                  String?                @default("Free")
+  updatedAt             DateTime
+  Connections           Connections[]
+  DiscordWebhook        DiscordWebhook[]
+  LocalGoogleCredential LocalGoogleCredential?
+  Notion                Notion[]
+  Slack                 Slack[]
+  Workflows             Workflows[]
+}
+
+model Workflows {
+  id                String   @id
+  nodes             String?
+  edges             String?
+  name              String
+  discordTemplate   String?
+  notionTemplate    String?
+  slackTemplate     String?
+  slackChannels     String[]
+  slackAccessToken  String?
+  notionAccessToken String?
+  notionDbId        String?
+  flowPath          String?
+  cronPath          String?
+  publish           Boolean? @default(false)
+  description       String
+  userId            String
+  User              User     @relation(fields: [userId], references: [clerkId])
+}
+
+model todos {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  user_id     Int?
+  done        Boolean? @default(false)
+  users       users?   @relation(fields: [user_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model users {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique @db.VarChar(255)
+  password String  @db.VarChar(255)
+  todos    todos[]
+}
