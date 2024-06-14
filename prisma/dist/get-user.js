@@ -23,7 +23,7 @@ function main() {
             //   posts: true,
             // },
         });
-        console.log(user);
+        //   console.log(user);
     });
 }
 main()

@@ -13,16 +13,12 @@ const client_1 = require("@prisma/client");
 const prisma = new client_1.PrismaClient();
 function main() {
     return __awaiter(this, void 0, void 0, function* () {
-        //   await prisma.post.create({
-        //     data: {
-        //       title: 'title of post',
-        //       author: {
-        //         connect: {
-        //           id: 1,
-        //         },
-        //       },
-        //     },
-        //   });
+        yield prisma.todos.create({
+            data: {
+                title: 'title of post',
+                description: 'hshshsh',
+            },
+        });
     });
 }
 main()
