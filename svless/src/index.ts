@@ -15,8 +15,15 @@ export default {
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		console.log(request.body);
 		console.log(request.headers);
+		console.log(request.method);
+
+		let uri = request.url.replace(/^https:\/\/.*?\//gi, '/');
+		console.log('uri: ' + uri);
 
 		if (request.method === 'GET') {
+			if (uri === '/users') {
+				// handle the user request
+			}
 			return Response.json({
 				message: 'Hello from Cloudflare Workers! , You sent the get workers',
 			});
