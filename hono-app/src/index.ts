@@ -2,6 +2,17 @@ import { Hono } from 'hono';
 
 const app = new Hono();
 
+async function authMiddleware(c: any, next: any) {
+  if (c.req.header('Authorization')) {
+    //do validation
+    await next();
+  } else {
+    return c.text('You donot have access');
+  }
+}
+
+app.use(authMiddleware); //this is how we add middelware
+
 app.post('/', async (c) => {
   //body , headers , middlewares , query params, connecting to a db
 
