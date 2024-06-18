@@ -13,7 +13,7 @@ async function authMiddleware(c: any, next: any) {
 
 app.use(authMiddleware); //this is how we add middelware
 
-app.post('/', async (c) => {
+app.post('/', authMiddleware, async (c) => {
   //body , headers , middlewares , query params, connecting to a db
 
   const body = await c.req.json();
