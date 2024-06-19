@@ -22,7 +22,7 @@ app.post('/', authMiddleware, async (c) => {
   console.log(c.req.header('Authorization'));
   console.log(c.req.header('param'));
 
-  return c.text('HI bruh');
+  return c.text('HI bruhh');
 });
 
 // app.post('/users', (c) => {
