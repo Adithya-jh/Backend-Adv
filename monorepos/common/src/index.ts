@@ -6,3 +6,10 @@ export const signupInput = z.object({
 console.log('hi there');
 
 export type SignupParams = z.infer<typeof signupInput>;
+
+export function isodd(num: number) {
+  if (num % 2 == 0) {
+    return false;
+  }
+  return true;
+}

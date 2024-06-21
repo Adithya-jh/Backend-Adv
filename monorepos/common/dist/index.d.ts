@@ -10,3 +10,4 @@ export declare const signupInput: z.ZodObject<{
     password: string;
 }>;
 export type SignupParams = z.infer<typeof signupInput>;
+export declare function isodd(num: number): boolean;
