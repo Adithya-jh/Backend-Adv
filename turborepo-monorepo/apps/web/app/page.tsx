@@ -1,6 +1,7 @@
-import Image from "next/image";
-import { Button } from "@repo/ui/button";
-import styles from "./page.module.css";
+import Image from 'next/image';
+import { Button } from '@repo/ui/button';
+import { Signup } from '@repo/ui/signup';
+import styles from './page.module.css';
 
 export default function Home() {
   return (
@@ -52,6 +53,8 @@ export default function Home() {
         >
           Open alert
         </Button>
+
+        <Signup />
       </main>
       <footer className={styles.footer}>
         <a
