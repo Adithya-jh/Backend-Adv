@@ -17,7 +17,10 @@ app.use('/api/v1/blog/*', async (c, next) => {
   //if not , tell the user 403
 
   const header = c.req.header('authorization') || '';
-  const response = await verify(header, c.env.JWT_SECRET);
+
+  //Bearer token = ["Bearer" , "token"]
+  const token = header.split(' ')[1];
+  const response = await verify(token, c.env.JWT_SECRET);
 
   if (response.id) {
     await next();
