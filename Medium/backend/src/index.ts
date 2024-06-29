@@ -28,8 +28,28 @@ app.post('/api/v1/signup', async (c) => {
   return c.json({ jwt: token });
 });
 
-app.post('/api/v1/signin', (c) => {
-  return c.text('Hello Hono!');
+app.post('/api/v1/signin', async (c) => {
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+
+  const body = await c.req.json();
+  const user = await prisma.user.findUnique({
+    where: {
+      email: body.email,
+      password: body.password,
+    },
+  });
+
+  if (!user) {
+    c.status(403);
+    c.json({ error: 'user not found' });
+  }
+
+  //@ts-ignore
+  const jwt = await sign({ id: user.id }, c.env.JWT_SECRET);
+
+  return c.json({ jwt });
 });
 
 app.post('/api/v1/blog', (c) => {
