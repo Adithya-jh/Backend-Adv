@@ -40,6 +40,7 @@ app.post('/api/v1/signup', async (c) => {
     data: {
       email: body.email,
       password: body.password,
+      name: body.name,
     },
   });
 
