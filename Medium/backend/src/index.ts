@@ -18,7 +18,7 @@ app.use('/api/v1/blog/*', async (c, next) => {
 
   const header = c.req.header('authorization') || '';
 
-  //Bearer token = ["Bearer" , "token"]
+  //Bearer token = ["Bearer" , "token "]
   const token = header.split(' ')[1];
   const response = await verify(token, c.env.JWT_SECRET);
 
