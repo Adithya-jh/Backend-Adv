@@ -14,7 +14,7 @@ app.use('/api/v1/blog/*', async (c, next) => {
   //get the header
   //verify the header
   //if the header is correct, we proceed
-  //if not, tell the user 403
+  //if not, tell the user -  403
 
   const header = c.req.header('authorization') || '';
 
