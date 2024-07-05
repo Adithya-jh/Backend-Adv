@@ -25,13 +25,19 @@ blogRouter.use('/*', async (c, next) => {
 
   //Bearer token = ["Bearer" , "token "]
   const token = header.split(' ')[1];
-  const response = await verify(token, c.env.JWT_SECRET);
 
-  if (response) {
-    // @ts-ignore
-    c.set('userId', response.id); //we set the userid and we will use get() to get the userid in the routes
-    await next();
-  } else {
+  try {
+    const response = await verify(token, c.env.JWT_SECRET);
+
+    if (response) {
+      // @ts-ignore
+      c.set('userId', response.id); //we set the userid and we will use get() to get the userid in the routes
+      await next();
+    } else {
+      c.status(403);
+      return c.json({ error: 'unauthorized' });
+    }
+  } catch (e) {
     c.status(403);
     return c.json({ error: 'unauthorized' });
   }
