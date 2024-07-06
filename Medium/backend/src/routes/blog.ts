@@ -19,7 +19,7 @@ blogRouter.use('/*', async (c, next) => {
   //if the header is correct, we proceed
   //if not, tell the user -  403
 
-  //get the authorid and pass it in the route
+  //get the authorid and pass  it in the route
 
   const header = c.req.header('authorization') || '';
 
