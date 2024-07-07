@@ -1,9 +1,18 @@
-import { ChangeEvent } from 'react';
+import { SignupInput } from 'jha.medium-common';
+import { ChangeEvent, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
+  const [postInputs, setPostinputs] = useState<SignupInput>({
+    name: '',
+    username: '',
+    password: '',
+  });
+  console.log(postInputs);
+
   return (
     <div className="h-screen flex justify-center flex-col">
+      {/* {JSON.stringify(postInputs)} */}
       <div className="flex justify-center">
         <div>
           <div className="px-10">
@@ -25,19 +34,34 @@ const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
               <LabelledInput
                 label="Name"
                 placeholder="Adithya"
-                onChange={() => {}}
+                onChange={(e) => {
+                  setPostinputs((c) => ({
+                    ...c,
+                    name: e.target.value,
+                  }));
+                }}
               />
             ) : null}
             <LabelledInput
               label="Username"
               placeholder="bomb@gmail.com"
-              onChange={() => {}}
+              onChange={(e) => {
+                setPostinputs((c) => ({
+                  ...c,
+                  username: e.target.value,
+                }));
+              }}
             />
             <LabelledInput
               label="Password"
               type={'password'}
-              placeholder="123456"
-              onChange={() => {}}
+              placeholder="@#$%^&*("
+              onChange={(e) => {
+                setPostinputs((c) => ({
+                  ...c,
+                  password: e.target.value,
+                }));
+              }}
             />
             <button
               // onClick={sendRequest}
