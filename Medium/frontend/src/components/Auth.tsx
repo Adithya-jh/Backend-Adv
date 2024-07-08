@@ -1,14 +1,49 @@
 import { SignupInput } from 'jha.medium-common';
 import { ChangeEvent, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+
+import axios from 'axios';
+import { BACKEND_URL } from '../config';
 
 const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
+  const navigate = useNavigate();
   const [postInputs, setPostinputs] = useState<SignupInput>({
     name: '',
-    username: '',
+    //@ts-expect-error //there might be some shit
+    email: '',
     password: '',
   });
   console.log(postInputs);
+
+  const sendRequest = async () => {
+    console.log('Type:', type); // Log the type
+    console.log('Post Inputs:', postInputs); // Log the inputs
+
+    try {
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/${type === 'signup' ? 'signup' : 'signin'}`,
+        postInputs,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': JSON.stringify(postInputs).length,
+          },
+        }
+      );
+      console.log('Response:', response); // Log the response
+
+      const jwt = response.data;
+      localStorage.setItem('token', jwt);
+      navigate('/blogs');
+    } catch (e) {
+      ('Error sending request:');
+      console.error(
+        //@ts-expect-error : dont know
+        e.response ? e.response.data : e.message
+      );
+      // Alert the user if needed
+    }
+  };
 
   return (
     <div className="h-screen flex justify-center flex-col">
@@ -48,7 +83,7 @@ const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
               onChange={(e) => {
                 setPostinputs((c) => ({
                   ...c,
-                  username: e.target.value,
+                  email: e.target.value,
                 }));
               }}
             />
@@ -64,7 +99,7 @@ const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
               }}
             />
             <button
-              // onClick={sendRequest}
+              onClick={sendRequest}
               type="button"
               className="mt-8 w-full text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
             >
