@@ -22,13 +22,14 @@ const Auth = ({ type }: { type: 'signup' | 'signin' }) => {
     try {
       const response = await axios.post(
         `${BACKEND_URL}/api/v1/user/${type === 'signup' ? 'signup' : 'signin'}`,
-        postInputs,
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            'Content-Length': JSON.stringify(postInputs).length,
-          },
-        }
+
+        postInputs
+        // {
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //     'Content-Length': JSON.stringify(postInputs).length,
+        //   },
+        // }
       );
       console.log('Response:', response); // Log the response
 
