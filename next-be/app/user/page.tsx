@@ -2,12 +2,9 @@ import axios from 'axios';
 import Image from 'next/image';
 
 async function fetchData() {
-  const res = await axios.get<any, any>(
-    'https://week-13-offline.kirattechnologies.workers.dev/api/v1/user/details'
-  );
+  const res = await axios.get<any, any>('http://localhost:3000/api/user');
 
   //   console.log(JSON.stringify(res.data));
-
   return res;
 }
 
@@ -20,7 +17,6 @@ export default async function Home() {
     <div>
       {data.name}
       {data.email}
-      hi
     </div>
   );
 }
