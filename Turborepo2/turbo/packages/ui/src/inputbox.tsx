@@ -1,7 +1,7 @@
-export const InputbOx = ({ children }: { children: React.ReactNode }) => {
+export const Inputbox = ({ children }: { children: React.ReactNode }) => {
   return (
     <div>
-      <h1>InputbOx Component</h1>
+      <h1>Inputbox Component</h1>
       {children}
     </div>
   );
