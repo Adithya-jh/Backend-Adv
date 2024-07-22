@@ -27,12 +27,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const ws_1 = __importStar(require("ws"));
-const express_1 = __importDefault(require("express"));
-//when-ever we are creating websocket connection ->
-//we are creating http connection only - later it gets upgraded into a websocket connection.
-const app = (0, express_1.default)();
-const httpServer = app.listen(8080);
-const wss = new ws_1.WebSocketServer({ server: httpServer });
+const http_1 = __importDefault(require("http"));
+const server = http_1.default.createServer(function (request, response) {
+    console.log(new Date() + ' Received request for ' + request.url);
+    response.end('hi there');
+});
+const wss = new ws_1.WebSocketServer({ server });
 wss.on('connection', function connection(ws) {
     ws.on('error', console.error);
     ws.on('message', function message(data, isBinary) {
@@ -43,4 +43,7 @@ wss.on('connection', function connection(ws) {
         });
     });
     ws.send('Hello! Message From Server!!');
+});
+server.listen(8080, function () {
+    console.log(new Date() + ' Server is listening on port 8080');
 });
