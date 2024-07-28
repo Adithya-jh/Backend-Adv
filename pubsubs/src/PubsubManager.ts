@@ -8,11 +8,13 @@ export class PubSubManager {
 
     // Private constructor to prevent direct construction calls with the `new` operator
     private constructor() {
+        
         // Create a Redis client and connect to the Redis server
         this.redisClient = createClient();
         this.redisClient.connect();
         this.subscriptions = new Map();
     }
+
 
     // The static method that controls the access to the singleton instance
     public static getInstance(): PubSubManager {
