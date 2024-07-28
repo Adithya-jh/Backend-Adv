@@ -1,12 +1,12 @@
-import { GameManager, games } from "./store"
+import { gameManager, GameManager, games } from "./store"
 
 import { startLogger } from "./logger"
 
-const gameManager = new GameManager()
+
 
 startLogger()
 setInterval(() => {
-    gameManager.addGame("Alice","Bob")
+    gameManager.addGame(Math.random().toString(),Math.random().toString())
 },5000)
 
 
