@@ -8,8 +8,8 @@ export class PubSubManager {
 
     // Private constructor to prevent direct construction calls with the `new` operator
     private constructor() {
-        
-        // Create a Redis client and connect to the Redis server
+
+        // Create a Redis client and connect to the Redis Server
         this.redisClient = createClient();
         this.redisClient.connect();
         this.subscriptions = new Map();
