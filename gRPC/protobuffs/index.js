@@ -1,4 +1,4 @@
-const protobuf = require('protobufjs');
+const protobuf = require('./protobuffs/node_modules/protobufjs');
 
 // Load the Protocol Buffers schema
 protobuf.load('a.proto')
