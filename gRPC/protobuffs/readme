@@ -5,4 +5,4 @@ based on the structure in the a.proto file. the data has to be formatted. such t
 once we run the file a compressed version of data is created in another file.
 
 If we store that data in json and we send data in json for large scale applications -> the size of the data is very much bigger.
-the compressed data is 10X lesser in size than the json. It improves the bandwidth latency. Pbf is also very easy to parse tahn json.
+the compressed data is 10X lesser in size than the json. It improves the bandwidth latency. Pbf is also very easy to parse than json.
