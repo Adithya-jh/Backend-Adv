@@ -1,0 +1,14 @@
+NOW GETTING ONE LEVEL UP → WE ARE GONNA TEST ON HTTP REQUESTS.
+
+THE LIB WE USE IS ‘SUPERTEST’.
+how to test it?
+
+The ideal way to test it is using a libary, which gets the logic out of the server and tests that code.
+
+onesuch library is supertest.
+
+supertests helps us to test http requests instead of writing the whole code for calling the api through fetch and axios and testing the results.
+
+we import the “request” from “supertest”
+
+this request will simulate a http request.
