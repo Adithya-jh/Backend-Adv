@@ -1,0 +1,3 @@
+This is a simple testing code using Jest, 
+This repo uses ts-jest [jest for typescript] , it tests a simple addition function.
+this is just for understanding how jest work, in a beginner level approach.
