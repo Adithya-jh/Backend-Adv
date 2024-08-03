@@ -1,0 +1,16 @@
+APM : APPLICATION PERFORMANCE MONITORING -
+
+Newrelic also lets you see all the logs and stats from your process, not just the host machine
+
+create a new node application to monitor the process:
+
+install dependencies -
+npm install newrelic express
+
+on config, newrelic gives a code to run :
+NEW_RELIC_APP_NAME=test NEW_RELIC_LICENSE_KEY=license_key node -r newrelic index.js"
+
+run it and test the load.
+
+the script is updated, to run the code, run
+npm run start
