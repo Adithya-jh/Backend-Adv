@@ -19,6 +19,7 @@
   },
   "devDependencies": {
     "supertest": "^7.0.0",
-    "vitest": "^2.0.5"
+    "vitest": "^2.0.5",
+    "vitest-mock-extended": "^2.0.0"
   }
 }
