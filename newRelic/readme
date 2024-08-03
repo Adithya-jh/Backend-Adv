@@ -14,3 +14,14 @@ run it and test the load.
 
 the script is updated, to run the code, run
 npm run start
+
+LOGGING IN NEWRELIC:
+
+We cant console log and expect newrelic to log, it does not work. so we have to use external logging library like winston to log the req.
+
+Try enabling the `NEW_RELIC_APPLICATION_LOGGING_FORWARDING_ENABLED` flag
+
+in pacakage.json:
+"start": "NEW_RELIC_APPLICATION_LOGGING_FORWARDING_ENABLED=true NEW_RELIC_APP_NAME=test NEW_RELIC_LICENSE_KEY=your_key node -r newrelic index.js"
+
+in here, instaed of console.log to do logger.info() , logger.log() , logger.warning() , logger.error() → we are being bit more specific.

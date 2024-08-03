@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "NEW_RELIC_APP_NAME=node-newrelic NEW_RELIC_LICENSE_KEY=eu01xx9259282cb1d7720c219d001942FFFFNRAL node -r newrelic index.js "
+    "start": "NEW_RELIC_APPLICATION_LOGGING_FORWARDING_ENABLED=true NEW_RELIC_APP_NAME=node-newrelic NEW_RELIC_LICENSE_KEY=eu01xx9259282cb1d7720c219d001942FFFFNRAL node -r newrelic index.js "
   },
   "keywords": [],
   "author": "",
@@ -13,6 +13,7 @@
   "dependencies": {
     "express": "^4.19.2",
     "loadtest": "^8.0.9",
-    "newrelic": "^12.0.0"
+    "newrelic": "^12.0.0",
+    "winston": "^3.13.1"
   }
 }
