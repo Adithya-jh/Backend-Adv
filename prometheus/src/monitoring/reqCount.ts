@@ -23,7 +23,7 @@ export const reqCount = (req, res, next) => {
     method: req.method, //GET ,POST
     route: req.path, // /route
   });
-  //whenever the req is over then it is no longer active -> so decrease the count
+  //whenever the req is over then it is no longer active -> so decrease the count.
   res.on('finish', () => {
     activeUserGauge.dec({
       method: req.method, //GET ,POST
