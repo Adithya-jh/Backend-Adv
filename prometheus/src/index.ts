@@ -7,7 +7,7 @@ const app = express();
 app.use(express.json());
 app.use(reqCount);
 
-//add the req count histogram
+//add the req count histogram.
 app.use(reqCountHisto);
 
 app.get('/user', (req, res) => {
