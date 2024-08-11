@@ -5,3 +5,4 @@ This is a K8s intro :
 - Deployment
 - ReplicaSet
 - Service
+- Adding Port Mapping
