@@ -4,4 +4,4 @@
 # helm repo update
 # helm install nginx-ingress ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
 
-#The above thing creates the pod as well as a loadbalancer for us.
+#The above thing creates the pod as well as a load-balancer for us.
