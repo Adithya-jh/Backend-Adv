@@ -1,4 +1,4 @@
-This is a K8s intro :
+K8s Concepts:
 
 - Kind
 - Kubectl
@@ -8,3 +8,6 @@ This is a K8s intro :
 - Adding Port Mapping
 - Ingress + Ingress controller
 - Namespaces
+- Helm
+- Ngnix ingress controller
+- Traefik
