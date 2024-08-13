@@ -11,3 +11,5 @@ K8s Concepts:
 - Helm
 - Ngnix ingress controller
 - Traefik
+- Secret
+- Config Maps
