@@ -13,3 +13,6 @@ K8s Concepts:
 - Traefik
 - Secret
 - Config Maps
+- Persistent Volume
+- Persistent Volume Claim
+- HorizontalPodAutoscaler [HPA]
